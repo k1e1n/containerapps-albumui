@@ -6,6 +6,7 @@ env:
   CONTAINER_REGISTRY: handson2qvegiv4oqoduq.azurecr.io
   RESOURCE_GROUP_NAME: Handson01Repo100-CICD
   CONTAINERAPP_NAME: ctapp-demo-ui
+  API_BASE_URL: https://ctapp-demo-api.wonderfulsea-f9a0f2d8.japaneast.azurecontainerapps.io/
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -87,4 +88,5 @@ jobs:
               --name ${{ env.CONTAINERAPP_NAME }} \
               --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
               --container-name $container_name \
-              --image ${{ env.CONTAINER_REGISTRY }}/${{ env.REPOSITORY_NAME }}:${{ github.sha }}
+              --image ${{ env.CONTAINER_REGISTRY }}/${{ env.REPOSITORY_NAME }}:${{ github.sha }} \
+              --set-env-vars API_BASE_URL=${{ env.API_BASE_URL }}
