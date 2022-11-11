@@ -37,6 +37,8 @@ jobs:
           context: ./
   deploy:
     runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
     needs: build
   
     steps:
@@ -47,3 +49,9 @@ jobs:
       - name: Confirm if env have REPOSITORY_NAME
         run: |
           echo ${{ env.REPOSITORY_NAME }}
+      - name: Azure Login using OIDC
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
